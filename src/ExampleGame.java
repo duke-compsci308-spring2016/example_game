@@ -23,6 +23,7 @@ class ExampleGame {
     private ImageView myBouncer;
     private Rectangle myTopBlock;
     private Rectangle myBottomBlock;
+    public boolean change;
 
 
     /**
@@ -57,6 +58,7 @@ class ExampleGame {
         // Respond to input
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         myScene.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+        change = false;
         return myScene;
     }
 
@@ -68,27 +70,17 @@ class ExampleGame {
      */
     public void step (double elapsedTime) {
         // update attributes
-        myBouncer.setX(myBouncer.getX() + BOUNCER_SPEED * elapsedTime);
-        myTopBlock.setRotate(myBottomBlock.getRotate() - 1);
-        myBottomBlock.setRotate(myBottomBlock.getRotate() + 1);
+
         
-        // check for collisions
-        // with shapes, can check precisely
-        Shape intersect = Shape.intersect(myTopBlock, myBottomBlock);
-        if (intersect.getBoundsInLocal().getWidth() != -1) {
-            myTopBlock.setFill(Color.MAROON);
-        }
-        else {
-            myTopBlock.setFill(Color.RED);
-        }
-        // with images can only check bounding box
-        if (myBottomBlock.getBoundsInParent().intersects(myBouncer.getBoundsInParent())) {
-            myBottomBlock.setFill(Color.BURLYWOOD);
-        }
-        else {
-            myBottomBlock.setFill(Color.BISQUE);
+        if(change){
+        	myTopBlock.setFill(Color.BLUE);
+        	change = false;
+        }else{
+        	myTopBlock.setFill(Color.GREEN);
+        	change = true;
         }
     }
+
 
 
     // What to do each time a key is pressed
